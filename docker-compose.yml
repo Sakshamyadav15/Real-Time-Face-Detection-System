@@ -1,0 +1,51 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: facedb
+      POSTGRES_USER: face
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "face"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    networks:
+      - internal
+
+  backend:
+    build: ./backend
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql+asyncpg://face:${DB_PASSWORD}@db/facedb
+      DETECTOR_BACKEND: ${DETECTOR_BACKEND:-mediapipe}
+      ROI_BOX_COLOR: ${ROI_BOX_COLOR:-#00FF00}
+      ROI_BOX_THICKNESS: ${ROI_BOX_THICKNESS:-3}
+      MAX_FRAME_SIZE_MB: ${MAX_FRAME_SIZE_MB:-2}
+      BROADCAST_QUEUE_SIZE: ${BROADCAST_QUEUE_SIZE:-10}
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:3000}
+    ports:
+      - "8000:8000"
+    networks:
+      - internal
+
+  frontend:
+    build: ./frontend
+    depends_on:
+      - backend
+    ports:
+      - "3000:80"
+    networks:
+      - internal
+
+volumes:
+  pgdata:
+
+networks:
+  internal:
