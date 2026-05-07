@@ -222,6 +222,10 @@ All image operations use Pillow (PIL) instead of OpenCV:
 
 **Performance**: Pillow's drawing operations are adequate for real-time annotation at 15 FPS. For higher throughput, consider OpenCV or GPU-accelerated alternatives.
 
+## AI Collaboration
+
+See [AI_ATTESTATION.md](./AI_ATTESTATION.md) for a full account of how AI tools were used in this project.
+
 ## License
 
 MIT
