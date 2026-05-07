@@ -61,7 +61,4 @@ frontend/build/
 .DS_Store
 Thumbs.db
 
-# Test and verification scripts
-test_*.py
-test_*.js
-verify_*.py
+
