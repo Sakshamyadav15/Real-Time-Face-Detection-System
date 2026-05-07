@@ -1,0 +1,25 @@
+# Web Framework
+fastapi==0.111.0
+uvicorn[standard]==0.30.0
+python-multipart==0.0.9
+
+# Database
+sqlalchemy[asyncio]==2.0.30
+asyncpg==0.29.0
+alembic==1.13.1
+
+# Configuration
+pydantic==2.7.1
+pydantic-settings==2.2.1
+
+# Image Processing (NO OpenCV)
+Pillow==10.3.0
+numpy>=1.26.0
+
+# Face Detection (priority chain)
+mediapipe==0.10.14
+# dlib==19.24.4  # Uncomment if needed as fallback
+# scikit-image==0.24.0  # Uncomment if needed as last resort
+
+# Utilities
+python-dotenv==1.0.1
